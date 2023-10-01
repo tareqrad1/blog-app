@@ -34,13 +34,13 @@ const verifyTokenOnlyUser = async(req, res, next) => {
     })
 }
 
-//verify by admin and user 
+// verify by admin and user >> thats allowed only with users because req.user.id !== req.params.id in < posts >
 const verifyTokenAuthorization = async(req, res, next) => {
     verifyToken(req, res, () => {
         if(req.user.id === req.params.id || req.user.isAdmin) {
             next();
         }else {
-            return res.status(403).json({ status: 'fail', message: 'Not allowed Only Users himself !' });
+            return res.status(403).json({ status: 'fail', message: 'Not allowed Only Users himself or admin !' });
         }
     })
 }

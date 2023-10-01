@@ -36,6 +36,7 @@ const updateSchema = Joi.object({
     bio: Joi.string()
 });
 
+
 module.exports = {
     registerSchema,
     updateSchema,
