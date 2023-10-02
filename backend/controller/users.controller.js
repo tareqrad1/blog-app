@@ -3,11 +3,7 @@ const bcrypt = require('bcrypt');
 const { updateSchema } = require('../util/validationSchema');
 const fs = require("fs");
 const path = require("path");
-const {
-    cloudinaryUploadImage,
-    cloudinaryRemoveImage,
-    cloudinaryRemoveMultipleImage
-  } = require("../util/cloudinary");
+const { cloudinaryUploadImage, cloudinaryRemoveImage } = require("../util/cloudinary");
 
 const getAllUsers = async(req, res) => {
     try {
@@ -18,9 +14,10 @@ const getAllUsers = async(req, res) => {
     }
 }
 
+// populate('posts') >> adding field posts in userSchema and get in this field all post user created 
 const getUserProfile = async(req, res) => {
     try {
-        const user = await User.findById(req.params.id).select('-password').select('-confirmPassword');
+        const user = await User.findById(req.params.id).populate('posts').select('-password').select('-confirmPassword');
         if(!user) return res.status(404).json({ message: 'User not found' });
         res.status(200).json({ status: 'success', data: { user: user } });
     }catch (error) {

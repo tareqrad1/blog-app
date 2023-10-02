@@ -11,7 +11,7 @@ const postSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    user: {
+    user: { // take id from logged in user
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
@@ -33,6 +33,16 @@ const postSchema = new mongoose.Schema({
             ref: 'User',
         }
     ]
-}, { timestamps: true })
+}, { 
+        timestamps: true,
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true },
+    })
+
+postSchema.virtual('comments', {
+    ref: 'Comment',
+    foreignField: 'postId',
+    localField: '_id',
+})
 
 module.exports = mongoose.model('Post', postSchema);

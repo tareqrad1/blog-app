@@ -5,6 +5,7 @@ const routerAuth = require('./router/auth.route');
 const cors = require('cors');
 const routerUser = require('./router/user.route');
 const routerPost = require('./router/post.route');
+const routerComment = require('./router/comment.route');
 const app = express();
 
 //mongoose connection
@@ -17,6 +18,7 @@ app.use(cors())
 app.use('/api/auth', routerAuth);
 app.use('/api/users', routerUser);
 app.use('/api/posts', routerPost);
+app.use('/api/comments', routerComment);
 
 app.all('*', (req, res) => {
     return res.status(404).json({ status: 'error', message: 'this resource is not available' });

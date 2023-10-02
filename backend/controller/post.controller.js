@@ -39,7 +39,7 @@ const getAllPost = async (req, res) => {
         .sort({ createdAt: -1 })
         .populate('user', ['-password', '-confirmPassword']);
     }else {
-        posts = await Post.find()
+        posts = await Post.find().populate('comments')
         .sort({ createdAt: -1 })
         .populate('user', ['-password', '-confirmPassword']);
     }
@@ -108,7 +108,6 @@ const toggleLike = async(req, res) => {
     if (!post) {
         return res.status(404).json({ message: "post not found" });
     }
-
     const isLiked = post.like.find((user) => user.toString() === req.user.id)
     if(isLiked) {
         post = await Post.findByIdAndUpdate(req.params.id, { // deleting likes
