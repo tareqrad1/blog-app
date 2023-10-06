@@ -40,7 +40,7 @@ const login = async(req, res) => {
             return res.status(404).json({ status: 'fail', message: 'Invalid email or password' });
         }
         const hashPassword = await bcrypt.compare(password, user.password);
-        const accessToken = generateJWT({ id: user._id, username: user.username, isAdmin: user.isAdmin }); 
+        const accessToken = generateJWT({ id: user._id, username: user.username, isAdmin: user.isAdmin, user: user.profilePicture, email: user.email }); 
         if(user && hashPassword) return res.status(202).json({ status: 'success', data: { token: accessToken, user: user} });
         else if(!hashPassword) return res.status(404).json({ status: 'fail', message: 'Invalid email or password'})
         else return res.status(400).json({status: 'fail', message: 'Something Wrong !'})
@@ -50,7 +50,7 @@ const login = async(req, res) => {
 }
 
 const logout = async(req, res) => {
-
+    
 }
 
 module.exports = {

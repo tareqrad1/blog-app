@@ -12,7 +12,10 @@ const app = express();
 ConnectToDB();
 
 // cors 
-app.use(cors())
+app.use(cors({
+    origin: ['http://localhost:5173'],
+    credentials: true,
+}))
 
 //start route server
 app.use('/api/auth', routerAuth);

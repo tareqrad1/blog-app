@@ -19,7 +19,7 @@ const createPost = async (req, res) => {
         }
     })
     await newPost.save();
-
+    
     res.status(201).json({ status:'success', post: newPost });
     fs.unlinkSync(pathImage);
 }
